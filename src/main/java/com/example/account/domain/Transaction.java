@@ -19,11 +19,13 @@ import java.time.LocalDateTime;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Transaction {
-
     @Id
     @GeneratedValue
     private Long id;
-
+    @CreatedDate
+    private LocalDateTime createAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
@@ -37,9 +39,5 @@ public class Transaction {
     private String transactionId;
     private LocalDateTime transactedAt;
 
-    @CreatedDate
-    private LocalDateTime createAt;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 }

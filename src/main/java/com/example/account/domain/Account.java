@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.loader.entity.AbstractEntityLoader;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,13 +18,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@EntityListeners(AbstractEntityLoader.class)
+@EntityListeners(AuditingEntityListener.class)
 public class Account {
-
     @Id
     @GeneratedValue
     private Long id;
-
+    @CreatedDate
+    private LocalDateTime createAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
     @ManyToOne
     private AccountUser accountUser;
     private String accountNumber;
@@ -36,10 +39,6 @@ public class Account {
     private LocalDateTime registerAt;
     private LocalDateTime unRegisteredAt;
 
-    @CreatedDate
-    private LocalDateTime createAt;
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     public void useBalance(Long amount) {
         if (amount > balance) {
